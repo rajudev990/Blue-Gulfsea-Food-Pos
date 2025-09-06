@@ -60,6 +60,8 @@ Route::prefix('shop')
         Route::put('/change-password', [ShopProfileController::class, 'updatePassword'])->name('change.password.update');
 
         Route::resource('units',ShopUnitController::class);
+        Route::post('units/status-update', [ShopController::class, 'updateStatus'])->name('units.status.update');
+
         Route::resource('products',ShopProductController::class);
         Route::resource('customers',ShopCustomerController::class);
         Route::resource('purchases',ShopPurchaseController::class);

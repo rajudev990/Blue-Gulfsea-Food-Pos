@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -132,7 +133,7 @@ class ShopController extends Controller
     }
     public function updateStatus(Request $request)
     {
-        $item = Shop::findOrFail($request->id);
+        $item = Unit::findOrFail($request->id);
         $item->status = $request->status;
         $item->save();
 

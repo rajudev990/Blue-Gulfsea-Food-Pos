@@ -13,7 +13,7 @@ class ShopUnitController extends Controller
      */
     public function index()
     {
-        $data = Unit::where('shop_id',auth()->guard('shop')->user()->id)->latest()->get();
+        $data = Unit::where('shop_id',auth()->guard('shop')->id())->latest()->get();
         return view('shop.unit.index', compact('data'));
     }
 
@@ -22,8 +22,7 @@ class ShopUnitController extends Controller
      */
     public function create()
     {
-        $shop= Shop::where('status',1)->get();
-        return view('shop.unit.create',compact('shop'));
+        return view('shop.unit.create');
     }
 
     /**
@@ -32,6 +31,7 @@ class ShopUnitController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['shop_id'] = auth()->guard('shop')->id();
         Unit::create($data);
         return redirect()->route('shop.units.index')->with('success', 'Data Create Successfully');
     }
@@ -49,9 +49,8 @@ class ShopUnitController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Unit::findOrFail($id);
-        $shop=Shop::where('status',1)->get();
-        return view('shop.unit.edit', compact('data','shop'));
+        $data = Unit::where('shop_id',auth()->guard('shop')->id())->findOrFail($id);
+        return view('shop.unit.edit', compact('data'));
     }
 
     /**
@@ -61,7 +60,7 @@ class ShopUnitController extends Controller
     {
         $data = Unit::findOrFail($id);
         $input = $request->all();
-
+        $input['shop_id'] = auth()->guard('shop')->id();
         $data->update($input);
         return redirect()->route('shop.units.index')->with('success', 'Data Update Successfully');
     }
@@ -72,7 +71,6 @@ class ShopUnitController extends Controller
     public function destroy(string $id)
     {
         $data = Unit::findOrFail($id);
-
         $data->delete();
         return redirect()->back( )->with('success', 'Data Delete Successfully');
     }

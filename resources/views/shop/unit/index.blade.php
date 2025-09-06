@@ -1,9 +1,9 @@
-@extends('admin.layouts.app')
+@extends('shop.layouts.app')
 
 @section('title')
 Unit List
 @endsection
-@section('content')
+@section('shop')
 <section class="content pt-4">
     <div class="container-fluid">
         <div class="row">
@@ -11,9 +11,9 @@ Unit List
                 <div class="card card-cyan">
                     <div class="card-header">
                         <h3 class="card-title">Unit List</h3>
-                        @can('create unit')
-                        <a href="{{ route('admin.units.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
-                        @endcan
+
+                        <a href="{{ route('shop.units.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -29,7 +29,7 @@ Unit List
                             </thead>
                             <tbody>
                                 @foreach($data as $item)
-                                @can('view unit')
+
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->shop?->name }}</td>
@@ -44,18 +44,17 @@ Unit List
                                         </label>
                                     </td>
                                     <td class="text-center">
-                                        @can('edit unit')
-                                        <a href="{{ route('admin.units.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                        @endcan
-                                        @can('delete unit')
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.units.destroy', $item->id) }}" method="POST" style="display: none;">
+
+                                        <a href="{{ route('shop.units.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('shop.units.destroy', $item->id) }}" method="POST" style="display: none;">
                                             @csrf @method('DELETE')
                                         </form>
                                         <a href="#" class="btn btn-sm btn-danger delete-btn" data-id="{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                        @endcan
+
                                     </td>
                                 </tr>
-                                @endcan
+
                                 @endforeach
                             </tbody>
                         </table>
@@ -78,7 +77,7 @@ Unit List
             let status = checkbox.is(':checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ route('admin.units.status.update') }}",
+                url: "{{ route('shop.units.status.update') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -104,7 +103,7 @@ Unit List
                 }
             });
         });
-        
+
     });
 </script>
 @endsection
