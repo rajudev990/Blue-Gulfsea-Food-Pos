@@ -25,6 +25,18 @@
                 @endcanany
 
 
+                @canany(['create shop','edit shop','view shop','delete shop'])
+                <li class="nav-item">
+                    <a href="{{ route('admin.shops.index') }}" class="nav-link {{ Route::is('admin.shops') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Shops
+                        </p>
+                    </a>
+                </li>
+                @endcanany
+
+
                 <!-- Role Managment  -->
                 @canany(['create role','edit role','view role','delete role','create user','edit user','view user','delete user'])
                 <li class="nav-item {{ Route::is('admin.roles.*') || Route::is('admin.users.*') ? 'menu-open' : '' }}">

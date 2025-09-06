@@ -11,17 +11,16 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShopController;
+use App\Http\Controllers\ShopProfileController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 
-
-
-
-Route::get('/cmd',function(){
+Route::get('/cmd', function () {
     Artisan::call('storage:link');
     Artisan::call('optimize:clear');
     Artisan::call('route:clear');
@@ -31,14 +30,32 @@ Route::get('/cmd',function(){
 });
 
 
-
+// Shop
 Route::get('/', [WebsiteController::class, 'home'])->name('index');
 
+Route::post('/shop/login', [LoginController::class, 'shoplogin'])->name('shop.login');
+Route::post('/shop/logout', [LoginController::class, 'shoplogout'])->name('shop.logout');
 
 
-// Auth::routes(['verify' => true]);
+Route::prefix('shop')
+    ->middleware(['auth:shop'])
+    ->name('shop.')
+    ->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('shop.dashboard');
+        })->name('dashboard');
+
+        Route::get('/profile/settings', [ShopProfileController::class, 'settings'])->name('profile.settings');
+        Route::put('/profile/settings', [ShopProfileController::class, 'updateSettings'])->name('profile.settings.update');
+
+        Route::get('/change-password', [ShopProfileController::class, 'changePassword'])->name('change.password');
+        Route::put('/change-password', [ShopProfileController::class, 'updatePassword'])->name('change.password.update');
+    });
 
 
+
+Auth::routes(['verify' => true]);
 
 
 // Route::middleware(['auth', 'no.admin', 'verified'])->group(function () {
@@ -85,17 +102,17 @@ Route::prefix('admin')
         Route::resource('users', UserController::class);
 
         // Shop
-        Route::resource('shops',ShopController::class);
-        Route::resource('units',UnitController::class);
-        Route::resource('products',ProductController::class);
-        Route::resource('customers',CustomerController::class);
-        Route::resource('purchases',PurchaseController::class);
-        Route::resource('sales',SalesController::class);
-        Route::resource('stocks',StockController::class);
-        Route::resource('reports',ReportController::class);
+        Route::resource('shops', ShopController::class);
+        Route::post('shops/status-update', [ShopController::class, 'updateStatus'])->name('shops.status.update');
 
 
-
+        Route::resource('units', UnitController::class);
+        Route::resource('products', ProductController::class);
+        Route::resource('customers', CustomerController::class);
+        Route::resource('purchases', PurchaseController::class);
+        Route::resource('sales', SalesController::class);
+        Route::resource('stocks', StockController::class);
+        Route::resource('reports', ReportController::class);
     });
 
 
