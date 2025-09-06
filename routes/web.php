@@ -15,6 +15,13 @@ use App\Http\Controllers\ShopProfileController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Shop\ShopCustomerController;
+use App\Http\Controllers\Shop\ShopProductController;
+use App\Http\Controllers\Shop\ShopPurchaseController;
+use App\Http\Controllers\Shop\ShopReportController;
+use App\Http\Controllers\Shop\ShopSalesController;
+use App\Http\Controllers\Shop\ShopStockController;
+use App\Http\Controllers\Shop\ShopUnitController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -51,6 +58,19 @@ Route::prefix('shop')
 
         Route::get('/change-password', [ShopProfileController::class, 'changePassword'])->name('change.password');
         Route::put('/change-password', [ShopProfileController::class, 'updatePassword'])->name('change.password.update');
+
+        Route::resource('units',ShopUnitController::class);
+        Route::resource('products',ShopProductController::class);
+        Route::resource('customers',ShopCustomerController::class);
+        Route::resource('purchases',ShopPurchaseController::class);
+        Route::resource('sales',ShopSalesController::class);
+        Route::resource('stocks',ShopStockController::class);
+        Route::resource('reports',ShopReportController::class);
+
+
+
+
+
     });
 
 

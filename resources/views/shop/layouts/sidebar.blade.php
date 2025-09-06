@@ -22,6 +22,71 @@
                         </p>
                     </a>
                 </li>
+
+
+               
+                <li class="nav-item">
+                    <a href="{{ route('shop.units.index') }}" class="nav-link {{ Route::is('shop.units') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-ruler-combined"></i>
+                        <p>Unit</p>
+                    </a>
+                </li>
+               
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('shop.products.index') }}" class="nav-link {{ Route::is('shop.products') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p>Product</p>
+                    </a>
+                </li>
+               
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('shop.customers.index') }}" class="nav-link {{ Route::is('shop.customers') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Customer</p>
+                    </a>
+                </li>
+               
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('shop.purchases.index') }}" class="nav-link {{ Route::is('shop.purchases') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>Purchase</p>
+                    </a>
+                </li>
+               
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('shop.sales.index') }}" class="nav-link {{ Route::is('shop.sales') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cash-register"></i>
+                        <p>Sale</p>
+                    </a>
+                </li>
+               
+
+               
+                <li class="nav-item">
+                    <a href="{{ route('shop.stocks.index') }}" class="nav-link {{ Route::is('shop.stocks') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>Stock</p>
+                    </a>
+                </li>
+               
+
+               
+                <li class="nav-item">
+                    <a href="{{ route('shop.reports.index') }}" class="nav-link {{ Route::is('shop.reports') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>Report</p>
+                    </a>
+                </li>
+               
+
                
 
             </ul>
