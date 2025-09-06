@@ -44,8 +44,11 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'phone' => 'required|regex:/^(01)[0-9]{9}$/|unique:customers,phone',
+        ]);
         $data = $request->all();
-         $image = $request->hasFile('image') ? ImageHelper::uploadImage($request->file('image')) : null;
+        $image = $request->hasFile('image') ? ImageHelper::uploadImage($request->file('image')) : null;
         $data['image'] = $image;
         Customer::create($data);
         return redirect()->route('admin.customers.index')->with('success', 'Data Create Successfully');
@@ -72,22 +75,38 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $data = Customer::findOrFail($id);
-    $image=$request->hasFile('image') ? ImageHelper::uploadImage($request->file('image')) : ''; 
+   public function update(Request $request, string $id)
+{
+    $data = Customer::findOrFail($id);
 
-            // Delete old image
-            if ($data->image) {
-                Storage::disk('public')->delete($data->image);
-            }
-        $input = $request->all();
-        if($image)
-            $data['image']=$image;
+    // Validation
+    $request->validate([
+        'phone' => 'required|regex:/^(01)[0-9]{9}$/|unique:customers,phone,' . $id,
+    ]);
 
-        $data->update($input);
-        return redirect()->route('admin.customers.index')->with('success', 'Data Update Successfully');
+    // Image upload
+    $image = $request->hasFile('image') 
+        ? ImageHelper::uploadImage($request->file('image')) 
+        : null;
+
+    // Delete old image if new uploaded
+    if ($image && $data->image) {
+        Storage::disk('public')->delete($data->image);
     }
+
+    $input = $request->all();
+
+    // Replace image if new uploaded
+    if ($image) {
+        $input['image'] = $image;
+    }
+
+    $data->update($input);
+
+    return redirect()->route('admin.customers.index')
+                     ->with('success', 'Data updated successfully');
+}
+
 
     /**
      * Remove the specified resource from storage.

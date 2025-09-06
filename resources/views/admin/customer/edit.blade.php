@@ -18,7 +18,7 @@
                         @method('PUT')
 
                         <div class="card-body row">
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 <label for="shop_id">Shop<span class="text-danger">*</span></label>
                                 <select name="shop_id" id="shop_id" class="form-control @error('shop_id') is-invalid @enderror" required>
                                     @foreach($shop as $item)
@@ -28,8 +28,8 @@
                                 @error('shop_id') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="name"> Name <span class="text-danger">*</span></label>
-                                <input value="{{$data->name}}" type="name" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" required>
+                                <label for="name"> Name <span class="text-black-50">(optional)</span></label>
+                                <input value="{{$data->name}}" type="name" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" >
                                 @error('name') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group col-lg-6">
@@ -38,8 +38,8 @@
                                 @error('email') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="phone"> Phone <span class="text-black-50">(optional)</span></label>
-                                <input value="{{$data->phone}}" type="phone" id="phone" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror">
+                                <label for="phone"> Phone <span class="text-danger">*</span></label>
+                                <input value="{{$data->phone}}" type="phone" id="phone" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror" required>
                                 @error('phone') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group col-lg-6">
