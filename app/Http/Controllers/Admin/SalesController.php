@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -21,7 +22,8 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        $data = Sale::latest()->get();
+        return view('admin.sale.index', compact('data'));
     }
 
     /**
@@ -29,7 +31,8 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('admin.sale.create');
     }
 
     /**
@@ -37,7 +40,9 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Sale::create($data);
+        return redirect()->route('admin.sales.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -53,7 +58,8 @@ class SalesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Sale::findOrFail($id);
+        return view('admin.sale.edit', compact('data'));
     }
 
     /**
@@ -61,7 +67,11 @@ class SalesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Sale::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.sales.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -69,6 +79,9 @@ class SalesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Sale::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back( )->with('success', 'Data Delete Successfully');
     }
 }

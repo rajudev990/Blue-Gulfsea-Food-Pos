@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -22,7 +23,8 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        $data = Purchase::latest()->get();
+        return view('admin.purchase.index', compact('data'));
     }
 
     /**
@@ -30,7 +32,8 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('admin.purchase.create');
     }
 
     /**
@@ -38,7 +41,9 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Purchase::create($data);
+        return redirect()->route('admin.purchases.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -54,7 +59,8 @@ class PurchaseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Purchase::findOrFail($id);
+        return view('admin.purchase.edit', compact('data'));
     }
 
     /**
@@ -62,7 +68,11 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Purchase::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.purchases.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -70,6 +80,9 @@ class PurchaseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Purchase::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back( )->with('success', 'Data Delete Successfully');
     }
 }

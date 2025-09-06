@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -20,9 +21,10 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+     public function index()
     {
-        //
+        $data = Customer::latest()->get();
+        return view('admin.customer.index', compact('data'));
     }
 
     /**
@@ -30,7 +32,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('admin.customer.create');
     }
 
     /**
@@ -38,7 +41,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Customer::create($data);
+        return redirect()->route('admin.customers.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -54,7 +59,8 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Customer::findOrFail($id);
+        return view('admin.customer.edit', compact('data'));
     }
 
     /**
@@ -62,7 +68,11 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Customer::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.customers.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -70,6 +80,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Customer::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back( )->with('success', 'Data Delete Successfully');
     }
 }

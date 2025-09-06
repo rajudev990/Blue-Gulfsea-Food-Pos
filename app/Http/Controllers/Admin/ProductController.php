@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,9 +21,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+     public function index()
     {
-        //
+        $data = Product::latest()->get();
+        return view('admin.product.index', compact('data'));
     }
 
     /**
@@ -30,7 +32,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('admin.product.create');
     }
 
     /**
@@ -38,7 +41,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Product::create($data);
+        return redirect()->route('admin.products.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -54,7 +59,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Product::findOrFail($id);
+        return view('admin.product.edit', compact('data'));
     }
 
     /**
@@ -62,7 +68,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Product::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.products.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -70,6 +80,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Product::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back( )->with('success', 'Data Delete Successfully');
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Shop;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
@@ -22,7 +24,8 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $data = Unit::latest()->get();
+        return view('admin.unit.index', compact('data'));
     }
 
     /**
@@ -30,7 +33,8 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        $shop=Shop::where('status',1)->get();
+        return view('admin.unit.create',compact('shop'));
     }
 
     /**
@@ -38,7 +42,9 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Unit::create($data);
+        return redirect()->route('admin.units.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -54,7 +60,9 @@ class UnitController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Unit::findOrFail($id);
+        $shop=Shop::where('status',1)->get();
+        return view('admin.unit.edit', compact('data','shop'));
     }
 
     /**
@@ -62,7 +70,11 @@ class UnitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Unit::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.units.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -70,6 +82,9 @@ class UnitController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Unit::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back( )->with('success', 'Data Delete Successfully');
     }
 }

@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     protected $guarded = [];
+
+    public function shop(){
+        return $this->belongsTo(Shop::class,'shop_id');
+    }
 }

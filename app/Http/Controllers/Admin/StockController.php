@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -22,7 +23,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $data = SaleItem::latest()->get();
+        return view('admin.saleitem.index', compact('data'));
     }
 
     /**
@@ -30,7 +32,8 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.saleitem.create');
     }
 
     /**
@@ -38,7 +41,9 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        SaleItem::create($data);
+        return redirect()->route('admin.stocks.index')->with('success', 'Data Create Successfully');
     }
 
     /**
@@ -54,7 +59,8 @@ class StockController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = SaleItem::findOrFail($id);
+        return view('admin.saleitem.edit', compact('data'));
     }
 
     /**
@@ -62,7 +68,11 @@ class StockController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = SaleItem::findOrFail($id);
+        $input = $request->all();
+
+        $data->update($input);
+        return redirect()->route('admin.stocks.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -70,6 +80,9 @@ class StockController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = SaleItem::findOrFail($id);
+
+        $data->delete();
+        return redirect()->back()->with('success', 'Data Delete Successfully');
     }
 }
