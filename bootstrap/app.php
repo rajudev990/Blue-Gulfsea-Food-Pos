@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-             'admin.has.role' => CheckAdminHasAnyRole::class,
+            'admin.has.role' => CheckAdminHasAnyRole::class,
             'admin.only' => RedirectIfNotAdmin::class,
             'no.admin' => RedirectIfAdmin::class,
 

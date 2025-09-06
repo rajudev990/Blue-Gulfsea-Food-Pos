@@ -1,74 +1,76 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Helpers\ImageHelper;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class AdminProfileController extends Controller
+class ShopProfileController extends Controller
 {
-
     public function settings()
     {
-        return view('admin.auth.settings');
+        return view('shop.settings');
     }
     public function changePassword()
     {
-        return view('admin.auth.change-password');
+        return view('shop.change-password');
     }
+    
     public function updateSettings(Request $request)
     {
-        $admin = auth('admin')->user();
+        $shop = auth('shop')->user();
 
         $request->validate([
             'name'   => 'required|string|max:255',
-            'email'  => 'required|email|unique:shops,email,' . $admin->id,
+            'email'  => 'required|email|unique:shops,email,' . $shop->id,
             'phone'  => 'nullable|string|max:20',
+            'address'=> 'nullable|string|max:255',
             'image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
 
         // Prepare update data
         $data = [
             'name'    => $request->name,
             'email'   => $request->email,
             'phone'   => $request->phone,
+            'address' => $request->address,
         ];
 
         // Handle image upload
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($admin->image && Storage::disk('public')->exists($admin->image)) {
-                Storage::disk('public')->delete($admin->image);
+            if ($shop->image && Storage::disk('public')->exists($shop->image)) {
+                Storage::disk('public')->delete($shop->image);
             }
 
             // Upload new image
             $data['image'] = ImageHelper::uploadImage($request->file('image'));
         }
 
-        // Update admin profile
-        $admin->update($data);
+        // Update shop profile
+        $shop->update($data);
 
         return back()->with('success', 'Profile updated successfully.');
     }
 
+
+
+
     public function updatePassword(Request $request)
     {
-        $admin = auth('admin')->user();
+        $shop = auth('shop')->user();
 
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:6|confirmed',
         ]);
 
-        if (!\Hash::check($request->current_password, $admin->password)) {
+        if (!\Hash::check($request->current_password, $shop->password)) {
             return back()->withErrors(['current_password' => 'Current password does not match.']);
         }
 
-        $admin->update([
+        $shop->update([
             'password' => \Hash::make($request->new_password),
         ]);
 

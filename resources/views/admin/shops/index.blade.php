@@ -1,8 +1,5 @@
 @extends('admin.layouts.app')
-
-@section('title')
-Unit List
-@endsection
+@section('title')Shop List @endsection
 @section('content')
 <section class="content pt-4">
     <div class="container-fluid">
@@ -10,30 +7,39 @@ Unit List
             <div class="col-md-12">
                 <div class="card card-cyan">
                     <div class="card-header">
-                        <h3 class="card-title">Unit List</h3>
-                        @can('create unit')
-                        <a href="{{ route('admin.units.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+                        <h3 class="card-title">Shop List</h3>
+                        @can('create shop')
+                        <a href="{{ route('admin.shops.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add Shop</a>
                         @endcan
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                       
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Shop</th>
                                     <th>Name</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 @foreach($data as $item)
-                                @can('view unit')
+                                @can('view shop')
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->shop?->name }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->address }}</td>
+                                    <td class="text-center">
+                                        <img src="{{ Storage::url($item->image) }}" width="50" height="50">
+                                    </td>
                                     <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
@@ -43,12 +49,14 @@ Unit List
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
+                                    
                                     <td class="text-center">
-                                        @can('edit unit')
-                                        <a href="{{ route('admin.units.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        @can('edit shop')
+                                        <a href="{{ route('admin.shops.edit', $item->id) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('admin.shops.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                                         @endcan
-                                        @can('delete unit')
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.units.destroy', $item->id) }}" method="POST" style="display: none;">
+                                        @can('delete shop')
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.shops.destroy', $item->id) }}" method="POST" style="display: none;">
                                             @csrf @method('DELETE')
                                         </form>
                                         <a href="#" class="btn btn-sm btn-danger delete-btn" data-id="{{ $item->id }}"><i class="fa fa-trash"></i></a>
@@ -59,6 +67,7 @@ Unit List
                                 @endforeach
                             </tbody>
                         </table>
+                        
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -66,7 +75,11 @@ Unit List
         </div>
     </div>
 </section>
+
 @endsection
+
+
+
 @section('script')
 <script>
     $(document).ready(function() {
@@ -78,7 +91,7 @@ Unit List
             let status = checkbox.is(':checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ route('admin.units.status.update') }}",
+                url: "{{ route('admin.shops.status.update') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

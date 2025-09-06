@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-Update Unit
+Update Product
 @endsection
 @section('content')
 <section class="content pt-4">
@@ -10,13 +10,13 @@ Update Unit
             <div class="col-md-8 m-auto">
                 <div class="card card-cyan">
                     <div class="card-header">
-                        <h3 class="card-title">Update Unit</h3>
-                        @can('view unit')
-                        <a href="{{ route('admin.units.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
+                        <h3 class="card-title">Update Product</h3>
+                        @can('view product')
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
                         @endcan
                     </div>
                     <!-- /.card-header -->
-                    <form id="quickForm" method="POST" action="{{ route('admin.units.update',$data->id) }}">
+                    <form id="quickForm" method="POST" action="{{ route('admin.products.update',$data->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="card-body row">

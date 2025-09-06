@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-Unit List
+Product List
 @endsection
 @section('content')
 <section class="content pt-4">
@@ -10,9 +10,9 @@ Unit List
             <div class="col-md-12">
                 <div class="card card-cyan">
                     <div class="card-header">
-                        <h3 class="card-title">Unit List</h3>
-                        @can('create unit')
-                        <a href="{{ route('admin.units.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+                        <h3 class="card-title">Product List</h3>
+                        @can('create product')
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
                         @endcan
                     </div>
                     <!-- /.card-header -->
@@ -29,12 +29,12 @@ Unit List
                             </thead>
                             <tbody>
                                 @foreach($data as $item)
-                                @can('view unit')
+                                @can('view product')
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->shop?->name }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td class="text-center">
+                                     <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
                                                 class="status-toggle"
@@ -44,11 +44,11 @@ Unit List
                                         </label>
                                     </td>
                                     <td class="text-center">
-                                        @can('edit unit')
-                                        <a href="{{ route('admin.units.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        @can('edit product')
+                                        <a href="{{ route('admin.products.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                                         @endcan
-                                        @can('delete unit')
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.units.destroy', $item->id) }}" method="POST" style="display: none;">
+                                        @can('delete product')
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.products.destroy', $item->id) }}" method="POST" style="display: none;">
                                             @csrf @method('DELETE')
                                         </form>
                                         <a href="#" class="btn btn-sm btn-danger delete-btn" data-id="{{ $item->id }}"><i class="fa fa-trash"></i></a>
@@ -67,6 +67,7 @@ Unit List
     </div>
 </section>
 @endsection
+
 @section('script')
 <script>
     $(document).ready(function() {
@@ -78,7 +79,7 @@ Unit List
             let status = checkbox.is(':checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ route('admin.units.status.update') }}",
+                url: "{{ route('admin.products.status.update') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

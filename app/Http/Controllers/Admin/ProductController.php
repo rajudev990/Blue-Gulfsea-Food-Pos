@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -32,8 +33,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        
-        return view('admin.product.create');
+        $shop=Shop::where('status',1)->get();
+        return view('admin.product.create',compact('shop'));
     }
 
     /**
@@ -60,7 +61,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $data = Product::findOrFail($id);
-        return view('admin.product.edit', compact('data'));
+        $shop=Shop::where('status',1)->get();
+        return view('admin.product.edit', compact('data','shop'));
     }
 
     /**
@@ -84,5 +86,25 @@ class ProductController extends Controller
 
         $data->delete();
         return redirect()->back( )->with('success', 'Data Delete Successfully');
+    }
+
+     public function updateStatus(Request $request)
+    {
+        $item = Product::findOrFail($request->id);
+        $item->status = $request->status;
+        $item->save();
+
+        // Check if the request is an AJAX request
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => $item->status,
+                'message' => $item->status == 1
+                    ? 'Status has been activated successfully.'
+                    : 'Status has been deactivated successfully.'
+            ]);
+        }
+
+        // In case it's not an AJAX request, redirect with a success message
+        return back()->with('success', 'Status has been updated successfully.');
     }
 }

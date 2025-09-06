@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Login</title>
+    <title>Shop Login</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -70,11 +70,10 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <div class="login-logo">
-                    <!-- <a href="{{ url('/') }}"><b>{{ config('app.name') }}</b></a> -->
-                    <a href="{{ url('/') }}"><b>{{ __('Admin Login') }}</b></a>
+                    <a href="{{ url('/') }}"><b>{{ __('Shop Login') }}</b></a>
                 </div>
 
-                <form method="POST" action="{{ route('admin.login') }}">
+                <form method="POST" action="{{ route('shop.login') }}">
                     @csrf
                     <div class="input-group">
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus>

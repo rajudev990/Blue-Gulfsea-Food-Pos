@@ -20,9 +20,6 @@ $setting = \App\Models\Setting::first();
     <link rel="stylesheet" href="{{ asset('admin/') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Toastr CSS -->
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"> -->
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Tempusdominus Bootstrap 4 -->
@@ -172,9 +169,6 @@ $setting = \App\Models\Setting::first();
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/" target="_blank"><i class="fas fa-globe"></i></a>
-                </li>
             </ul>
 
 
@@ -190,36 +184,36 @@ $setting = \App\Models\Setting::first();
 
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ Storage::url(Auth::guard('admin')->user()->image) }}" class="user-image img-circle elevation-2" alt="User Image">
-                        <span class="d-none d-md-inline">{{ Auth::guard('admin')->user()->name ?? 'Admin' }}</span>
+                        <img src="{{ Storage::url(Auth::guard('shop')->user()->image) }}" class="user-image img-circle elevation-2" alt="User Image">
+                        <span class="d-none d-md-inline">{{ Auth::guard('shop')->user()->name ?? 'Admin' }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!-- User image -->
                         <li class="user-header bg-cyan">
-                            <img src="{{ Storage::url(Auth::guard('admin')->user()->image) }}" class="img-circle elevation-2" alt="User Image">
+                            <img src="{{ Storage::url(Auth::guard('shop')->user()->image) }}" class="img-circle elevation-2" alt="User Image">
                             <p>
-                                {{ Auth::guard('admin')->user()->name ?? 'Admin' }}
-                                <small>Member since {{ Auth::guard('admin')->user()->created_at->format('M Y') }}</small>
+                                {{ Auth::guard('shop')->user()->name ?? 'Admin' }}
+                                <small>Member since {{ Auth::guard('shop')->user()->created_at->format('M Y') }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="row text-center">
                                 <div class="col-12">
-                                    <a href="{{ route('admin.profile.settings') }}">Profile Settings</a>
+                                    <a href="{{ route('shop.profile.settings') }}">Profile Settings</a>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <a href="{{ route('admin.change.password') }}">Change Password</a>
+                                    <a href="{{ route('shop.change.password') }}">Change Password</a>
                                 </div>
                             </div>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat float-right"
+                            <a href="{{ route('shop.logout') }}" class="btn btn-default btn-flat float-right"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
                             </a>
-                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('shop.logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </li>
@@ -232,31 +226,11 @@ $setting = \App\Models\Setting::first();
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('admin.layouts.sidebar')
-
+        @include('shop.layouts.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-
-
-            <!-- app.blade.php -->
-            <!-- <div class="bg-gradient-navy content-header py-1 shadow-lg">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h5 class="m-0">@yield('page-title', 'Dashboard')</h5>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">@yield('breadcrumb', 'Dashboard')</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-            @yield('content')
+            @yield('shop')
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
@@ -303,9 +277,6 @@ $setting = \App\Models\Setting::first();
     <script src="{{ asset('admin/') }}/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="{{ asset('admin/') }}/plugins/jquery-validation/additional-methods.min.js"></script>
     <!-- Toastr JS -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script> -->
-    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Select2 -->
@@ -391,34 +362,7 @@ $setting = \App\Models\Setting::first();
             });
         });
     </script>
-    <!-- <script>
-        @if(session('success'))
-            toastr.success("{{ session('success') }}");
-        @endif
 
-        @if(session('error'))
-            toastr.error("{{ session('error') }}");
-        @endif
-
-        @if(session('info'))
-            toastr.info("{{ session('info') }}");
-        @endif
-
-        @if(session('warning'))
-            toastr.warning("{{ session('warning') }}");
-        @endif
-    </script> -->
-    <!-- <script>
-        const notyf = new Notyf();
-
-        @if(session('success'))
-            notyf.success("{{ session('success') }}");
-        @endif
-
-        @if(session('error'))
-            notyf.error("{{ session('error') }}");
-        @endif
-    </script> -->
     @if(session('success'))
     <script>
         Swal.fire({
