@@ -66,15 +66,6 @@ Update Stock
                             </div>
 
 
-
-                            <div class="form-group col-lg-6">
-                                <label for="status">Status </label>
-                                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                                    <option value="1" {{$data->status==1 ? 'selected' : ''}}>Active</option>
-                                    <option value="0" {{$data->status==0 ? 'selected' : ''}}>Deactive</option>
-                                </select>
-                                @error('status') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
                         </div>
 
                         <div class="card-footer d-flex justify-content-end">

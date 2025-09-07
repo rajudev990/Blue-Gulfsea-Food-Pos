@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class StockController extends Controller
     public function create()
     {
 
-        $sale = SaleItem::Where('status',1)->get();
+        $sale = Sale::Where('status',1)->get();
         $unit = Unit::Where('status',1)->get();
         $product = Product::Where('status',1)->get();
         return view('admin.saleitem.create',compact('sale','unit','product'));
@@ -65,7 +66,7 @@ class StockController extends Controller
     public function edit(string $id)
     {
         $data = SaleItem::findOrFail($id);
-        $sale = SaleItem::Where('status',1)->get();
+        $sale = Sale::Where('status',1)->get();
         $unit = Unit::Where('status',1)->get();
         $product = Product::Where('status',1)->get();
         return view('admin.saleitem.edit', compact('data','sale','unit','product'));
