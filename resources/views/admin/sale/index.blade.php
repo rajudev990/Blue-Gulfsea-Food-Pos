@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-Purchase List
+Sale List
 @endsection
 @section('content')
 <section class="content pt-4">
@@ -10,9 +10,9 @@ Purchase List
             <div class="col-md-12">
                 <div class="card card-cyan">
                     <div class="card-header">
-                        <h3 class="card-title">Purchase List</h3>
-                        @can('create purchase')
-                        <a href="{{ route('admin.purchases.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+                        <h3 class="card-title">Sale List</h3>
+                        @can('create sales')
+                        <a href="{{ route('admin.sales.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
                         @endcan
                     </div>
                     <!-- /.card-header -->
@@ -22,25 +22,27 @@ Purchase List
                                 <tr>
                                     <th>Sl</th>
                                     <th>Shop</th>
-                                    <th>Product</th>
-                                    <th>Unit</th>
-                                    <th>Product Date</th>
-                                    <th>Vat</th>
+                                    <th>Customer</th>
+                                    <th>Voucher No</th>
+                                    <th>Sale Date</th>
+                                    <th>VAT%</th>
+                                    <th>Price</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($data as $item)
-                                @can('view purchase')
+                                @can('view sales')
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->shop?->name }}</td>
-                                    <td>{{ $item->product?->name }}</td>
-                                    <td>{{ $item->unit?->name }}</td>
-                                    <td>{{ $item->product_date }}</td>
+                                    <td>{{ $item->customer?->name }}</td>
+                                    <td>{{ $item->voucher_no }}</td>
+                                    <td>{{ $item->sale_date }}</td>
                                     <td>{{ $item->vat }}</td>
-                                     <td class="text-center">
+                                    <td>{{ $item->price }}</td>
+                                    <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
                                                 class="status-toggle"
@@ -50,11 +52,11 @@ Purchase List
                                         </label>
                                     </td>
                                     <td class="text-center">
-                                        @can('edit purchase')
-                                        <a href="{{ route('admin.purchases.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        @can('edit sales')
+                                        <a href="{{ route('admin.sales.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                                         @endcan
-                                        @can('delete purchase')
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.purchases.destroy', $item->id) }}" method="POST" style="display: none;">
+                                        @can('delete sales')
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.sales.destroy', $item->id) }}" method="POST" style="display: none;">
                                             @csrf @method('DELETE')
                                         </form>
                                         <a href="#" class="btn btn-sm btn-danger delete-btn" data-id="{{ $item->id }}"><i class="fa fa-trash"></i></a>
@@ -85,7 +87,7 @@ Purchase List
             let status = checkbox.is(':checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ route('admin.purchases.status.update') }}",
+                url: "{{ route('admin.sales.status.update') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -111,7 +113,7 @@ Purchase List
                 }
             });
         });
-        
+
     });
 </script>
 @endsection

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Shop;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -32,8 +35,11 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        
-        return view('admin.purchase.create');
+        $shop = Shop::Where('status',1)->get();
+        $unit = Unit::Where('status',1)->get();
+        $product = Product::Where('status',1)->get();
+
+        return view('admin.purchase.create', compact('shop', 'unit', 'product'));
     }
 
     /**
@@ -41,6 +47,16 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'shop_id'            => 'required|string',
+            'product_id'         => 'required|string',
+            'unit_id'            => 'required',
+            'buy_price'          => 'required|numeric',
+            'vat'                => 'required|numeric',
+            'final_price'        => 'required|numeric',
+            'per_product_price'  => 'required|numeric',
+        ]);
+
         $data = $request->all();
         Purchase::create($data);
         return redirect()->route('admin.purchases.index')->with('success', 'Data Create Successfully');
@@ -60,7 +76,10 @@ class PurchaseController extends Controller
     public function edit(string $id)
     {
         $data = Purchase::findOrFail($id);
-        return view('admin.purchase.edit', compact('data'));
+        $shop = Shop::Where('status',1)->get();
+        $unit = Unit::Where('status',1)->get();
+        $product = Product::Where('status',1)->get();
+        return view('admin.purchase.edit', compact('data', 'shop', 'unit', 'product'));
     }
 
     /**
@@ -68,6 +87,18 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        $request->validate([
+            'shop_id'            => 'required|string',
+            'product_id'         => 'required|string',
+            'unit_id'            => 'required',
+            'buy_price'          => 'required|numeric',
+            'vat'                => 'required|numeric',
+            'final_price'        => 'required|numeric',
+            'per_product_price'  => 'required|numeric',
+        ]);
+
+
         $data = Purchase::findOrFail($id);
         $input = $request->all();
 
@@ -83,10 +114,10 @@ class PurchaseController extends Controller
         $data = Purchase::findOrFail($id);
 
         $data->delete();
-        return redirect()->back( )->with('success', 'Data Delete Successfully');
+        return redirect()->back()->with('success', 'Data Delete Successfully');
     }
 
-     public function updateStatus(Request $request)
+    public function updateStatus(Request $request)
     {
         $item = Purchase::findOrFail($request->id);
         $item->status = $request->status;

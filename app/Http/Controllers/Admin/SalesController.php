@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -31,8 +33,9 @@ class SalesController extends Controller
      */
     public function create()
     {
-        
-        return view('admin.sale.create');
+        $shop = Shop::Where('status', 1)->get();
+        $customer = Customer::Where('status', 1)->get();
+        return view('admin.sale.create', compact('shop', 'customer'));
     }
 
     /**
@@ -59,7 +62,9 @@ class SalesController extends Controller
     public function edit(string $id)
     {
         $data = Sale::findOrFail($id);
-        return view('admin.sale.edit', compact('data'));
+        $shop = Shop::Where('status', 1)->get();
+        $customer = Customer::Where('status', 1)->get();
+        return view('admin.sale.edit', compact('data', 'shop', 'customer'));
     }
 
     /**
@@ -82,10 +87,10 @@ class SalesController extends Controller
         $data = Sale::findOrFail($id);
 
         $data->delete();
-        return redirect()->back( )->with('success', 'Data Delete Successfully');
+        return redirect()->back()->with('success', 'Data Delete Successfully');
     }
 
-     public function updateStatus(Request $request)
+    public function updateStatus(Request $request)
     {
         $item = Sale::findOrFail($request->id);
         $item->status = $request->status;
