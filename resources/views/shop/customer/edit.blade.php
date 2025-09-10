@@ -1,6 +1,6 @@
-@extends('admin.layouts.app')
+@extends('shop.layouts.app')
 @section('title')Update Customer @endsection
-@section('content')
+@section('shop')
 <section class="content pt-4">
     <div class="container-fluid">
         <div class="row">
@@ -8,28 +8,20 @@
                 <div class="card card-cyan">
                     <div class="card-header">
                         <h3 class="card-title">Update Customer</h3>
-                        @can('view customer')
-                        <a href="{{ route('admin.customers.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
-                        @endcan
+
+                        <a href="{{ route('shop.customers.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
+
                     </div>
                     <!-- /.card-header -->
-                    <form id="quickForm" method="POST" action="{{ route('admin.customers.update',$data->id) }}" enctype="multipart/form-data">
+                    <form id="quickForm" method="POST" action="{{ route('shop.customers.update',$data->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <div class="card-body row">
-                            <div class="form-group col-lg-6">
-                                <label for="shop_id">Shop<span class="text-danger">*</span></label>
-                                <select name="shop_id" id="shop_id" class="form-control @error('shop_id') is-invalid @enderror" required>
-                                    @foreach($shop as $item)
-                                    <option value="{{$item->id}}" {{$data->shop_id==$item->id ? 'selected' : ''}}>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('shop_id') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
+
                             <div class="form-group col-lg-6">
                                 <label for="name"> Name <span class="text-black-50">(optional)</span></label>
-                                <input value="{{$data->name}}" type="name" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" >
+                                <input value="{{$data->name}}" type="name" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
                                 @error('name') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group col-lg-6">
@@ -52,7 +44,7 @@
                                 <label for="status"> Status <span class="text-danger">*</span></label>
                                 <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                                     <option value="1" {{$data->status==1 ? 'selected' : ''}}>Active</option>
-                                    <option value="0" {{$data->status==0 ? 'selected' : ''}}>InActive</option>
+                                    <option value="0" {{$data->status==0 ? 'selected' : ''}}>Deactive</option>
                                 </select>
                                 @error('status') <span class="text-danger">{{$message}}</span> @enderror
                             </div>

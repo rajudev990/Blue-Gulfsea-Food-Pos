@@ -63,8 +63,18 @@ Route::prefix('shop')
         Route::post('units/status-update', [ShopController::class, 'updateStatus'])->name('units.status.update');
 
         Route::resource('products',ShopProductController::class);
+        Route::post('products/status-update', [ShopProductController::class, 'updateStatus'])->name('products.status.update');
+
         Route::resource('customers',ShopCustomerController::class);
+        Route::post('customers/status-update', [ShopCustomerController::class, 'updateStatus'])->name('customers.status.update');
+
+
+
         Route::resource('purchases',ShopPurchaseController::class);
+        Route::post('purchases/status-update', [ShopPurchaseController::class, 'updateStatus'])->name('purchases.status.update');
+
+
+
         Route::resource('sales',ShopSalesController::class);
         Route::resource('stocks',ShopStockController::class);
         Route::resource('reports',ShopReportController::class);

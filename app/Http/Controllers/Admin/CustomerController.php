@@ -84,19 +84,18 @@ class CustomerController extends Controller
         'phone' => 'required|regex:/^(01)[0-9]{9}$/|unique:customers,phone,' . $id,
     ]);
 
-    // Image upload
+   
     $image = $request->hasFile('image') 
         ? ImageHelper::uploadImage($request->file('image')) 
         : null;
 
-    // Delete old image if new uploaded
+    
     if ($image && $data->image) {
         Storage::disk('public')->delete($data->image);
     }
 
     $input = $request->all();
 
-    // Replace image if new uploaded
     if ($image) {
         $input['image'] = $image;
     }

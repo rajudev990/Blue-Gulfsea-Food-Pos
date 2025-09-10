@@ -1,9 +1,9 @@
-@extends('admin.layouts.app')
+@extends('shop.layouts.app')
 
 @section('title')
 Update Product
 @endsection
-@section('content')
+@section('shop')
 <section class="content pt-4">
     <div class="container-fluid">
         <div class="row">
@@ -12,24 +12,14 @@ Update Product
                     <div class="card-header">
                         <h3 class="card-title">Update Product</h3>
                         @can('view product')
-                        <a href="{{ route('admin.products.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
+                        <a href="{{ route('shop.products.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
                         @endcan
                     </div>
                     <!-- /.card-header -->
-                    <form id="quickForm" method="POST" action="{{ route('admin.products.update',$data->id) }}">
+                    <form id="quickForm" method="POST" action="{{ route('shop.products.update',$data->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="card-body row">
-                            <div class="form-group col-lg-12">
-                                <label for="shop_id">Shop<span class="text-danger">*</span></label>
-                                <select name="shop_id" id="shop_id" class="form-control @error('shop_id') is-invalid @enderror" required>
-                                    @foreach($shop as $item)
-                                    <option value="{{$item->id}}" {{$data->shop_id==$item->id ? 'selected' : ''}}>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('shop_id') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
-
 
                             <div class="form-group col-lg-12">
                                 <label for="name">Name<span class="text-danger">*</span></label>

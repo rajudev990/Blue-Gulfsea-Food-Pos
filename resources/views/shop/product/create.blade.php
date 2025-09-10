@@ -1,9 +1,9 @@
-@extends('admin.layouts.app')
+@extends('shop.layouts.app')
 
 @section('title')
 Create Product
 @endsection
-@section('content')
+@section('shop')
 <section class="content pt-4">
     <div class="container-fluid">
         <div class="row">
@@ -11,24 +11,15 @@ Create Product
                 <div class="card card-cyan">
                     <div class="card-header">
                         <h3 class="card-title">Create Product</h3>
-                        @can('view product')
-                        <a href="{{ route('admin.products.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
-                        @endcan
+
+                        <a href="{{ route('shop.products.index') }}" class="btn btn-success float-right"><i class="fa fa-angle-left"> Back</i></a>
+
                     </div>
                     <!-- /.card-header -->
-                    <form id="quickForm" method="POST" action="{{ route('admin.products.store') }}">
+                    <form id="quickForm" method="POST" action="{{ route('shop.products.store') }}">
                         @csrf
                         @method('POST')
                         <div class="card-body row">
-                            <div class="form-group col-lg-12">
-                                <label for="shop_id">Shop<span class="text-danger">*</span></label>
-                                <select name="shop_id" id="shop_id" class="form-control @error('shop_id') is-invalid @enderror" required>
-                                    @foreach($shop as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('shop_id') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
 
 
                             <div class="form-group col-lg-12">

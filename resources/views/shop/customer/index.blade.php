@@ -1,9 +1,9 @@
-@extends('admin.layouts.app')
+@extends('shop.layouts.app')
 
 @section('title')
 Customer List
 @endsection
-@section('content')
+@section('shop')
 <section class="content pt-4">
     <div class="container-fluid">
         <div class="row">
@@ -11,9 +11,9 @@ Customer List
                 <div class="card card-cyan">
                     <div class="card-header">
                         <h3 class="card-title">Customer List</h3>
-                        @can('create customer')
-                        <a href="{{ route('admin.customers.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
-                        @endcan
+
+                        <a href="{{ route('shop.customers.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -32,7 +32,7 @@ Customer List
                             </thead>
                             <tbody>
                                 @foreach($data as $item)
-                                @can('view customer')
+
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->shop?->name }}</td>
@@ -42,7 +42,7 @@ Customer List
                                     <td class="text-center">
                                         <img src="{{ Storage::url($item->image) }}" width="50" height="50">
                                     </td>
-                                     <td class="text-center">
+                                    <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
                                                 class="status-toggle"
@@ -52,23 +52,22 @@ Customer List
                                         </label>
                                     </td>
                                     <td class="text-center">
-                                        @can('edit customer')
-                                        <a href="{{ route('admin.customers.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                        @endcan
-                                        @can('delete customer')
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.customers.destroy', $item->id) }}" method="POST" style="display: none;">
+
+                                        <a href="{{ route('shop.customers.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+
+
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('shop.customers.destroy', $item->id) }}" method="POST" style="display: none;">
                                             @csrf @method('DELETE')
                                         </form>
                                         <a href="#" class="btn btn-sm btn-danger delete-btn" data-id="{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                        @endcan
+
                                     </td>
                                 </tr>
-                                @endcan
+
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
         </div>
@@ -87,7 +86,7 @@ Customer List
             let status = checkbox.is(':checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ route('admin.customers.status.update') }}",
+                url: "{{ route('shop.customers.status.update') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -113,7 +112,7 @@ Customer List
                 }
             });
         });
-        
+
     });
 </script>
 @endsection
