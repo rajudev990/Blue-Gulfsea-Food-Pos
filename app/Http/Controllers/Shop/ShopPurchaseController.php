@@ -24,8 +24,8 @@ class ShopPurchaseController extends Controller
      */
     public function create()
     {
-        $unit = Unit::Where('status',1)->get();
-        $product = Product::Where('status',1)->get();
+        $unit = Unit::where('shop_id', auth()->guard('shop')->id())->where('status',1)->get();
+        $product = Product::where('shop_id', auth()->guard('shop')->id())->where('status',1)->get();
         return view('shop.purchase.create',compact('unit','product'));
     }
 
@@ -34,7 +34,6 @@ class ShopPurchaseController extends Controller
      */
     public function store(Request $request)
     {
-
 
         $data = $request->all();
         $data['shop_id'] = auth()->guard('shop')->id();

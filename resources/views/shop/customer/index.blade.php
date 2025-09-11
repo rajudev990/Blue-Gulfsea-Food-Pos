@@ -12,7 +12,7 @@ Customer List
                     <div class="card-header">
                         <h3 class="card-title">Customer List</h3>
 
-                        <a href="{{ route('shop.customers.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+                        <a href="{{ route('shop.customers.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add Customer</a>
 
                     </div>
                     <!-- /.card-header -->
@@ -21,12 +21,12 @@ Customer List
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Shop</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Image</th>
-                                    <th class="text-center">Status</th>
+                                    <th>Shop Name</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Email</th>
+                                    <th>Customer Phone</th>
+                                    <th>Profile</th>
+                                    <!-- <th class="text-center">Status</th> -->
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -40,9 +40,11 @@ Customer List
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone }}</td>
                                     <td class="text-center">
+                                        @if($item->image)
                                         <img src="{{ Storage::url($item->image) }}" width="50" height="50">
+                                        @endif
                                     </td>
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
                                                 class="status-toggle"
@@ -50,7 +52,7 @@ Customer List
                                                 {{ $item->status == 1 ? 'checked' : '' }}>
                                             <span class="slider round"></span>
                                         </label>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
 
                                         <a href="{{ route('shop.customers.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>

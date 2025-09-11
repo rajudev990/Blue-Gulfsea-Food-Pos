@@ -12,7 +12,7 @@ Purchase List
                     <div class="card-header">
                         <h3 class="card-title">Purchase List</h3>
 
-                        <a href="{{ route('shop.purchases.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
+                        <a href="{{ route('shop.purchases.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add Purchase</a>
 
                     </div>
                     <!-- /.card-header -->
@@ -21,12 +21,11 @@ Purchase List
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Shop</th>
+                                    <th>Shop Name</th>
                                     <th>Product</th>
-                                    <th>Unit</th>
-                                    <th>Product Date</th>
-                                    <th>Vat</th>
-                                    <th class="text-center">Status</th>
+                                    <th>Purchase Date</th>
+                                    <th>Product Price</th>
+                                    <!-- <th class="text-center">Status</th> -->
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -36,11 +35,15 @@ Purchase List
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->shop?->name }}</td>
-                                    <td>{{ $item->product?->name }}</td>
-                                    <td>{{ $item->unit?->name }}</td>
-                                    <td>{{ $item->product_date }}</td>
-                                    <td>{{ $item->vat }}</td>
-                                    <td class="text-center">
+                                    <td>{{ $item->product?->name }} ({{ $item->unit?->name }})</td>
+                                    <td>{{ $item->purchases_date }}</td>
+                                    <td>
+                                        <p><span class="font-weight-bold">(Buy Price + Vat) : </span> {{ number_format($item->buy_price,2) }} + {{ number_format($item->vat,2) }} = {{ number_format($item->buy_price + $item->vat,2) }}</p>
+
+                                        <p><span class="font-weight-bold">Total Price / QTY :</span> {{ number_format($item->buy_price + $item->vat,2) }} / {{ number_format($item->qty,2) }} = {{ number_format(($item->buy_price + $item->vat) / $item->qty,2) }}</p>
+
+                                    </td>
+                                    <!-- <td class="text-center">
                                         <label class="switch">
                                             <input type="checkbox"
                                                 class="status-toggle"
@@ -48,7 +51,7 @@ Purchase List
                                                 {{ $item->status == 1 ? 'checked' : '' }}>
                                             <span class="slider round"></span>
                                         </label>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
 
                                         <a href="{{ route('shop.purchases.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>

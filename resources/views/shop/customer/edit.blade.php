@@ -20,7 +20,7 @@
                         <div class="card-body row">
 
                             <div class="form-group col-lg-6">
-                                <label for="name"> Name <span class="text-black-50">(optional)</span></label>
+                                <label for="name">Customer Name <span class="text-danger">*</span></label>
                                 <input value="{{$data->name}}" type="name" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
                                 @error('name') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
@@ -40,14 +40,7 @@
                                 @error('address') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
 
-                            <div class="form-group col-lg-6">
-                                <label for="status"> Status <span class="text-danger">*</span></label>
-                                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                                    <option value="1" {{$data->status==1 ? 'selected' : ''}}>Active</option>
-                                    <option value="0" {{$data->status==0 ? 'selected' : ''}}>Deactive</option>
-                                </select>
-                                @error('status') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
+                           
                             <div class="form-group col-lg-6">
                                 <label for="image">Image <span class="text-black-50">(optional)</span></label>
                                 <input type="file" id="image" name="image" value="{{ $data->image }}" class="form-control p-1 @error('image') is-invalid @enderror">
@@ -59,6 +52,15 @@
                                     <img src="" id="preview-image" alt="" style="display: none;width:100px;height:100px;border:1px dashed #000;">
                                     @endif
                                 </div>
+                            </div>
+
+                             <div class="form-group col-lg-6">
+                                <label for="status"> Status <span class="text-danger">*</span></label>
+                                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
+                                    <option value="1" {{$data->status==1 ? 'selected' : ''}}>Active</option>
+                                    <option value="0" {{$data->status==0 ? 'selected' : ''}}>Deactive</option>
+                                </select>
+                                @error('status') <span class="text-danger">{{$message}}</span> @enderror
                             </div>
 
                         </div>

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('shop_id')->nullable();
             $table->bigInteger('sale_id')->nullable();
             $table->bigInteger('customer_id')->nullable();
-            $table->float('paid')->nullable();
-            $table->float('payment_date')->nullable();
+            $table->decimal('paid',10,2)->nullable();
+            $table->string('payment_date')->nullable();
             $table->string('payment_by')->nullable();
             $table->timestamps();
         });

@@ -30,6 +30,9 @@ class ShopUnitController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:units,name,',
+        ]);
         $data = $request->all();
         $data['shop_id'] = auth()->guard('shop')->id();
         Unit::create($data);
@@ -59,6 +62,10 @@ class ShopUnitController extends Controller
     public function update(Request $request, string $id)
     {
         $data = Unit::findOrFail($id);
+         $request->validate([
+            'name' => 'required|unique:units,name,id'.$data->id,
+        ]);
+
         $input = $request->all();
         $input['shop_id'] = auth()->guard('shop')->id();
         $data->update($input);

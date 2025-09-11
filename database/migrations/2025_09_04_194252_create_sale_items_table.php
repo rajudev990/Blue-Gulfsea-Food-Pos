@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('product_id')->nullable();
             $table->bigInteger('qty')->nullable();
             $table->bigInteger('unit_id')->nullable();
-            $table->float('price')->nullable();
+            $table->decimal('price',10,2)->nullable();
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ Create Unit
                             
 
                             <div class="form-group col-lg-12">
-                                <label for="name">Name<span class="text-danger">*</span></label>
+                                <label for="name">Unit Name<span class="text-danger">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" required>
                                 @error('name') <span class="text-danger">{{$message}}</span> @enderror
                             </div>

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('customer_id')->nullable();
             $table->string('voucher_no')->unique();
             $table->string('sale_date')->nullable();
-            $table->float('vat')->nullable();
-            $table->float('price')->nullable();
+            $table->decimal('vat',10,2)->nullable();
+            $table->decimal('price',10,2)->nullable();
             $table->bigInteger('status')->default(0);
             $table->timestamps();
         });

@@ -20,8 +20,8 @@ Product List
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Shop</th>
-                                    <th>Name</th>
+                                    <th>Shop Name</th>
+                                    <th>Product Name</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>

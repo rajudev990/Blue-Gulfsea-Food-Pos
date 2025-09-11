@@ -44,10 +44,10 @@ Update Purchase
 
 
                             <div class="form-group col-lg-6">
-                                <label for="product_date">Purchase Date <span class="text-secondary">(Optional)</span></label>
-                                <input value="{{$data->product_date}}" type="date" name="product_date" id="product_date"
-                                    class="form-control @error('product_date') is-invalid @enderror">
-                                @error('product_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label for="purchases_date">Purchase Date <span class="text-secondary">(Optional)</span></label>
+                                <input value="{{$data->purchases_date}}" type="date" name="purchases_date" id="purchases_date"
+                                    class="form-control @error('purchases_date') is-invalid @enderror">
+                                @error('purchases_date') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="form-group col-lg-6">

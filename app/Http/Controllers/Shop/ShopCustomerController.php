@@ -32,6 +32,10 @@ class ShopCustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'phone' => 'required|unique:customers,phone,',
+        ]);
+
         $data = $request->all();
         $image = $request->hasFile('image') ? ImageHelper::uploadImage($request->file('image')) : null;
         $data['image'] = $image;
@@ -64,22 +68,25 @@ class ShopCustomerController extends Controller
     {
         $data = Customer::findOrFail($id);
 
+        $request->validate([
+            'phone' => 'required|unique:customers,phone,' . $data->id . ',id',
+        ]);
 
-        
-    $image = $request->hasFile('image') 
-        ? ImageHelper::uploadImage($request->file('image')) 
-        : null;
 
-    
-    if ($image && $data->image) {
-        Storage::disk('public')->delete($data->image);
-    }
+        $image = $request->hasFile('image')
+            ? ImageHelper::uploadImage($request->file('image'))
+            : null;
+
+
+        if ($image && $data->image) {
+            Storage::disk('public')->delete($data->image);
+        }
 
         $input = $request->all();
-        
+
         if ($image) {
-        $input['image'] = $image;
-    }
+            $input['image'] = $image;
+        }
 
         $input['shop_id'] = auth()->guard('shop')->id();
         $data->update($input);
@@ -92,6 +99,9 @@ class ShopCustomerController extends Controller
     public function destroy(string $id)
     {
         $data = Customer::findOrFail($id);
+        if ($data->image) {
+            Storage::disk('public')->delete($data->image);
+        }
         $data->delete();
         return redirect()->back()->with('success', 'Data Delete Successfully');
     }

@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('shop_id')->nullable();
             $table->string('product_id')->nullable();
             $table->bigInteger('unit_id')->nullable();
-            $table->string('product_date')->nullable();
+            $table->string('purchases_date')->nullable();
             $table->bigInteger('qty')->nullable();
-            $table->float('buy_price')->nullable();
-            $table->float('vat')->nullable();
-            $table->float('final_price')->nullable();
-            $table->float('per_product_price')->nullable();
+            $table->decimal('buy_price',10,2)->nullable();
+            $table->decimal('vat',10,2)->nullable();
+            $table->decimal('final_price',10,2)->nullable();
+            $table->decimal('per_product_price',10,2)->nullable();
             $table->bigInteger('status')->default(0);
             $table->timestamps();
         });

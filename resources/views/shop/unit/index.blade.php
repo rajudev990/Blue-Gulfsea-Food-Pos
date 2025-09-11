@@ -11,9 +11,7 @@ Unit List
                 <div class="card card-cyan">
                     <div class="card-header">
                         <h3 class="card-title">Unit List</h3>
-
                         <a href="{{ route('shop.units.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add</a>
-
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -21,8 +19,8 @@ Unit List
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Shop</th>
-                                    <th>Name</th>
+                                    <th>Shop Name</th>
+                                    <th>Units Name</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
